@@ -53,3 +53,5 @@ Key backend dependencies:
 - zod
 
 For a complete list of dependencies, see `package.json`.
+![Screenshot 2025-04-26 122816](https://github.com/user-attachments/assets/f09b0423-a858-484c-9a5b-8781c0b1fa5a)
+

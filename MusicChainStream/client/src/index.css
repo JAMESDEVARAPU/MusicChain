@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  
+  --primary: 142 76% 45%;
+  --primary-foreground: 0 0% 0%;
+  
+  --secondary: 261 84% 62%;
+  --secondary-foreground: 0 0% 98%;
+  
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --ring: 240 4.9% 83.9%;
+  --radius: 0.5rem;
+
+  --sidebar-background: 240 10% 3.9%; 
+  --sidebar-foreground: 0 0% 98%;
+  --sidebar-primary: 142 76% 45%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 0 0% 98%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 240 4.9% 83.9%;
+
+  --chart-1: 142 76% 45%;
+  --chart-2: 261 84% 62%;
+  --chart-3: 0 84.2% 60.2%;
+  --chart-4: 48 96% 53%;
+  --chart-5: 207 90% 54%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-[#121212] text-white;
+    min-height: 100vh;
+  }
+}
+
+.player-progress {
+  height: 4px;
+  background-color: #535353;
+  cursor: pointer;
+  position: relative;
+}
+.player-progress-filled {
+  background-color: hsl(var(--primary));
+  height: 100%;
+  position: relative;
+}
+.player-progress:hover .player-progress-filled {
+  background-color: hsl(var(--primary));
+}
+.player-progress:hover .progress-handle {
+  display: block;
+}
+.progress-handle {
+  display: none;
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+.volume-progress {
+  height: 4px;
+  background-color: #535353;
+  cursor: pointer;
+}
+.volume-progress-filled {
+  background-color: #fff;
+  height: 100%;
+}
+.volume-progress:hover .volume-progress-filled {
+  background-color: hsl(var(--primary));
+}
+
+.font-heading {
+  font-family: 'Montserrat', sans-serif;
+}

@@ -30,7 +30,7 @@ npm install
 npm run dev
 ```
 
-The application will be available at http://0.0.0.0:5000
+The application will be available at https://f50b5276-be40-4170-80e4-053f6b26cd19-00-3a3zmisskyvd0.kirk.replit.dev/
 
 ## Project Structure
 - `/client` - React frontend application

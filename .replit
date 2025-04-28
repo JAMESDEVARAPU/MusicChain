@@ -8,7 +8,7 @@ channel = "stable-24_05"
 run = ["sh", "-c", "npm install"]
 
 [workflows]
-runButton = "Development Server"
+runButton = "Dev Server"
 
 [[workflows.workflow]]
 name = "Project"
@@ -26,7 +26,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd MusicChainStream && npm install && npm run dev"
+args = "cd MusicChainStream && npm install && NODE_ENV=development npm run dev"
 
 [[workflows.workflow]]
 name = "Development Server"

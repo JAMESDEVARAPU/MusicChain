@@ -6,3 +6,19 @@ channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "npm install"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+author = 35316949
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MusicChainStream && npm install"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MusicChainStream && npm run dev"

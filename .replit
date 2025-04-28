@@ -37,6 +37,24 @@ mode = "sequential"
 task = "shell.exec"
 args = "cd MusicChainStream && npm install && npm run dev"
 
+[[workflows.workflow]]
+name = "Production Build"
+author = 35316949
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MusicChainStream && npm install && npm run build && npm run start"
+
+[[workflows.workflow]]
+name = "Type Check"
+author = 35316949
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MusicChainStream && npm run check"
+
 [[ports]]
 localPort = 5000
 externalPort = 80

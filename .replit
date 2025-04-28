@@ -26,7 +26,7 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd MusicChainStream && npm install && NODE_ENV=development npm run dev"
+args = "cd MusicChainStream && npm install && npm run dev"
 
 [[workflows.workflow]]
 name = "Development Server"

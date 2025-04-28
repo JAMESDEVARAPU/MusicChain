@@ -8,10 +8,28 @@ channel = "stable-24_05"
 run = ["sh", "-c", "npm install"]
 
 [workflows]
-runButton = "Project"
+runButton = "Development Server"
 
 [[workflows.workflow]]
 name = "Project"
+author = 35316949
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MusicChainStream && npm install && npm run dev"
+
+[[workflows.workflow]]
+name = "Dev Server"
+author = 35316949
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd MusicChainStream && npm install && npm run dev"
+
+[[workflows.workflow]]
+name = "Development Server"
 author = 35316949
 mode = "sequential"
 

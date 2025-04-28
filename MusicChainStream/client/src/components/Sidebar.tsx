@@ -7,13 +7,13 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar bg-[#121212] md:w-64 w-full md:h-full md:fixed z-40">
-      
+
       <div className="p-6">
         <div className="flex items-center mb-8">
           <i className="ri-rhythm-line text-[#1DB954] text-2xl mr-2"></i>
           <h1 className="text-2xl font-bold font-heading text-white">BlockBeats</h1>
         </div>
-        
+
         <nav>
           <ul className="space-y-4">
             <li className="group">
@@ -79,7 +79,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </nav>
-        
+
         <div className="mt-8 border-t border-[#282828] pt-4">
           <h3 className="text-xs text-[#B3B3B3] uppercase font-bold mb-4 tracking-wider">Your Playlists</h3>
           <ul className="space-y-3 text-sm">

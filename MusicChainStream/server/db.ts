@@ -3,9 +3,12 @@ import { drizzle } from 'drizzle-orm/neon-serverless';
 import { neon } from '@neondatabase/serverless';
 import * as schema from '../shared/schema';
 
-// Allow development without database temporarily
-const sql = process.env.DATABASE_URL ? neon(process.env.DATABASE_URL) : null;
-export const db = sql ? drizzle(sql, { schema }) : null;
+if (!process.env.DATABASE_URL) {
+  throw new Error('DATABASE_URL is not defined');
+}
+
+const sql = neon(process.env.DATABASE_URL);
+export const db = drizzle(sql, { schema });
 
 // Helper function to check database connection
 export async function checkDatabaseConnection() {

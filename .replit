@@ -17,8 +17,8 @@ mode = "sequential"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd MusicChainStream && npm install"
+args = "cd MusicChainStream && npm install && npm run dev"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "cd MusicChainStream && npm run dev"
+[[ports]]
+localPort = 5000
+externalPort = 80

@@ -1,55 +1,69 @@
 
-# Web3 Music Streaming Platform
+# BlockBeats - Web3 Music Streaming Platform
 
-A decentralized music streaming platform built with React, TypeScript, and Express.
+A decentralized music streaming platform that combines blockchain technology with music streaming, enabling direct artist payments and transparent revenue tracking.
+
+## System Architecture
+
+```
+Client (React) <-> Express Server <-> PostgreSQL Database
+       ↕            ↕
+Web3/Blockchain  File Storage
+```
+
+## Tech Stack
+- **Frontend**: React, TypeScript, TailwindCSS
+- **Backend**: Express, Node.js
+- **Database**: PostgreSQL with Drizzle ORM
+- **State Management**: React Query
+- **Blockchain**: Web3.js
+- **UI Components**: Radix UI, Shadcn
+- **Audio**: Howler.js
 
 ## Features
-- Music streaming with blockchain integration
-- Artist dashboard and payments
-- Playlist management
-- Library organization
-- Search functionality
+- 🎵 Music streaming with blockchain integration
+- 💰 Direct artist payments via smart contracts
+- 📊 Artist dashboard and earnings tracking
+- 📱 Mobile-responsive design
+- 🔍 Advanced search functionality
+- 📚 Personal library management
 
-## Technology Stack
-- Frontend: React, TypeScript, TailwindCSS
-- Backend: Express, Node.js
-- State Management: React Query
-- Routing: Wouter
-- Audio: Howler.js
-- UI Components: Radix UI, Shadcn
-- Blockchain Integration: Web3.js
+## Setup Instructions
 
-## Development
-1. Install dependencies:
+1. Clone the repository
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Start the development server:
+3. Set up environment variables:
+- Create a `.env` file
+- Add DATABASE_URL for PostgreSQL connection
+- Add BLOCKCHAIN_RPC_URL for Web3 connection
+
+4. Start development server:
 ```bash
 npm run dev
 ```
 
-The application will be available at http://0.0.0.0:5000
+5. Build for production:
+```bash
+npm run build
+```
 
-## Project Structure
-- `/client` - React frontend application
-- `/server` - Express backend server
-- `/shared` - Shared TypeScript types and schemas
+## Security Considerations
+- Smart contract auditing required before mainnet deployment
+- Wallet transaction signing verification
+- Rate limiting on API endpoints
+- Input validation for all user data
+- Secure session management
 
-## Dependencies
-Key frontend dependencies:
-- @tanstack/react-query
-- react
-- wouter
-- tailwindcss
-- howler
-- framer-motion
+## Development Guidelines
+- Follow TypeScript best practices
+- Write tests for critical functions
+- Use proper error handling
+- Document code changes
+- Follow commit message conventions
 
-Key backend dependencies:
-- express
-- drizzle-orm
-- ws
-- zod
-
-For a complete list of dependencies, see `package.json`.
+## License
+MIT License

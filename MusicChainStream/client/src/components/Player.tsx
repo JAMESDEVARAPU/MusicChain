@@ -223,7 +223,7 @@ function Player() {
         <ExplicitAudioPlayer />
       )}
 
-      <div className="player fixed bottom-0 left-0 right-0 h-20 bg-[#181818] border-t border-[#282828] z-30 px-4">
+      <div className="player fixed bottom-0 left-0 right-0 h-20 bg-[#181818] border-t border-[#282828] z-30 px-4 backdrop-blur-md bg-opacity-95 shadow-lg transition-all duration-300">
         <div className="h-full max-w-screen-xl mx-auto flex items-center justify-between">
           {/* Currently Playing */}
           <div className="flex items-center w-1/4">

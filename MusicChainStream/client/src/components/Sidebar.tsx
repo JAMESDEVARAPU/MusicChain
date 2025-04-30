@@ -6,7 +6,7 @@ const Sidebar = () => {
   const isActive = (path: string) => location === path;
 
   return (
-    <div className="sidebar bg-[#121212] md:w-64 w-full md:h-full md:fixed z-40">
+    <div className="sidebar bg-[#121212] md:w-64 w-full md:h-full md:fixed z-40 transition-all duration-300 ease-in-out backdrop-blur-lg bg-opacity-95">
 
       <div className="p-6">
         <div className="flex items-center mb-8">

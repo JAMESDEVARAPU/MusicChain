@@ -8,7 +8,7 @@ import AudioGenerator from "@/components/AudioGenerator";
 
 function Player() {
   const {
-    currentTrack, isPlaying, togglePlayPause, nextTrack, previousTrack,
+    currentTrack, isPlaying, setIsPlaying, togglePlayPause, nextTrack, previousTrack,
     volume, setVolume, toggleShuffle, toggleRepeat, isShuffle, isRepeat
   } = usePlayer();
   const { payArtist } = useBlockchain();

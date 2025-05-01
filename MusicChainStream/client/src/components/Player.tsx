@@ -140,7 +140,7 @@ function Player() {
       };
       audioRef.current.onloadedmetadata = handleMetadataLoaded;
       audioRef.current.onerror = () => {
-        setAudioError("Browser blocked audio. Click 'Force Play'.");
+        setAudioError("Audio playback error. Please try again.");
       };
       audioRef.current.volume = volume / 100;
     } else {
@@ -150,4 +150,82 @@ function Player() {
 
     if (isPlaying && audioRef.current) {
       audioRef.current.play().catch(err => {
-        setAudioError("
+        setAudioError("Audio playback error. Please try again.");
+      });
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center w-full">
+      {showExplicitPlayer ? (
+        <ExplicitAudioPlayer />
+      ) : (
+        <AudioGenerator onAudioGenerated={handleAudioGenerated} />
+      )}
+      {audioError && (
+        <div className="text-red-500 mt-2">{audioError}</div>
+      )}
+      <div className="w-full max-w-lg">
+        <Slider value={[currentTime / duration * 100]} onChange={handleSeek} />
+      </div>
+      <div className="flex items-center justify-between w-full max-w-lg mt-2">
+        <div className="text-sm">{formatTime(currentTime)}</div>
+        <div className="text-sm">{formatTime(duration)}</div>
+      </div>
+      <div className="flex items-center justify-center w-full mt-4">
+        <button
+          onClick={previousTrack}
+          className="p-2 mr-2 bg-gray-200 hover:bg-gray-300 rounded-full"
+        >
+          Previous
+        </button>
+        <button
+          onClick={togglePlayPause}
+          className={cn(
+            "p-2 bg-gray-200 hover:bg-gray-300 rounded-full",
+            isPlaying ? "text-red-500" : "text-gray-500"
+          )}
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+        <button
+          onClick={nextTrack}
+          className="p-2 ml-2 bg-gray-200 hover:bg-gray-300 rounded-full"
+        >
+          Next
+        </button>
+      </div>
+      <div className="flex items-center mt-4">
+        <button
+          onClick={toggleShuffle}
+          className={cn("p-2 bg-gray-200 hover:bg-gray-300 rounded-full", isShuffle ? "text-blue-500" : "text-gray-500")}
+        >
+          Shuffle
+        </button>
+        <button
+          onClick={toggleRepeat}
+          className={cn("p-2 ml-2 bg-gray-200 hover:bg-gray-300 rounded-full", isRepeat ? "text-blue-500" : "text-gray-500")}
+        >
+          Repeat
+        </button>
+        <button
+          onClick={handlePayArtist}
+          className="p-2 ml-2 bg-gray-200 hover:bg-gray-300 rounded-full"
+        >
+          Pay Artist
+        </button>
+      </div>
+      <div className="w-full mt-4">
+        <Slider value={[volume]} onChange={setVolume} />
+      </div>
+      <div className="mt-4">
+        {audioError && (
+          <button onClick={handleForcePlay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Force Play</button>
+        )}
+      </div>
+
+    </div>
+  );
+}
+
+export default Player;

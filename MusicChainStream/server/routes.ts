@@ -3,6 +3,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { format } from "date-fns";
 import { insertTransactionSchema } from "@shared/schema";
+import multer from "multer";
+import { uploadToCloudinary, deleteFromCloudinary } from "./utils/upload";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // API prefix
@@ -139,11 +141,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   
   // Track upload route
-  app.post(`${apiPrefix}/tracks`, async (req, res) => {
+  app.post(`${apiPrefix}/tracks`, multer().fields([
+    { name: 'audio', maxCount: 1 },
+    { name: 'cover', maxCount: 1 }
+  ]), async (req, res) => {
     try {
       console.log("Received track upload request:", req.body);
       
-      const { title, album, duration, description, artistWallet, audioUrl, albumCover } = req.body;
+      const { title, album, duration, description } = req.body;
+      const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+      
+      let audioUrl, albumCover;
+      
+      if (files.audio) {
+        const audioResult: any = await uploadToCloudinary(files.audio[0], 'tracks');
+        audioUrl = audioResult.secure_url;
+      }
+      
+      if (files.cover) {
+        const coverResult: any = await uploadToCloudinary(files.cover[0], 'covers');
+        albumCover = coverResult.secure_url;
+      }
       
       // Validate required fields
       if (!title || !album || !duration) {

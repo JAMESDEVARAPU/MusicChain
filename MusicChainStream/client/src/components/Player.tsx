@@ -32,16 +32,25 @@ function Player() {
   };
 
   useEffect(() => {
-    if (!audioRef.current || !playerReady) return;
-    if (isPlaying) {
-      audioRef.current.play().catch(err => {
-        console.error("Play prevented:", err);
-        setAudioError("Browser blocked play. Click 'Force Play'.");
-      });
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying, playerReady]);
+    if (!audioRef.current || !playerReady || !currentTrack) return;
+    
+    const playAudio = async () => {
+      try {
+        if (isPlaying) {
+          await audioRef.current.play();
+          setAudioError(null);
+        } else {
+          audioRef.current.pause();
+        }
+      } catch (err) {
+        console.error("Playback error:", err);
+        setIsPlaying(false);
+        setAudioError("Click play to start playback");
+      }
+    };
+
+    playAudio();
+  }, [isPlaying, playerReady, currentTrack]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -125,25 +134,31 @@ function Player() {
   const handleAudioGenerated = (audioUrl: string) => {
     setGeneratedAudioUrl(audioUrl);
     setPlayerReady(true);
+    setAudioError(null);
 
-    if (!audioRef.current) {
-      audioRef.current = new Audio(audioUrl);
-      audioRef.current.onended = () => {
-        if (isRepeat) {
-          if (audioRef.current) {
-            audioRef.current.currentTime = 0;
-            audioRef.current.play();
+    try {
+      if (!audioRef.current) {
+        audioRef.current = new Audio(audioUrl);
+        audioRef.current.onended = () => {
+          if (isRepeat) {
+            if (audioRef.current) {
+              audioRef.current.currentTime = 0;
+              audioRef.current.play().catch(err => {
+                console.error("Replay error:", err);
+                setAudioError("Unable to replay track. Click play to try again.");
+              });
+            }
+          } else {
+            nextTrack();
           }
-        } else {
-          nextTrack();
-        }
-      };
-      audioRef.current.onloadedmetadata = handleMetadataLoaded;
-      audioRef.current.onerror = () => {
-        setAudioError("Audio playback error. Please try again.");
-      };
-      audioRef.current.volume = volume / 100;
-    } else {
+        };
+        audioRef.current.onloadedmetadata = handleMetadataLoaded;
+        audioRef.current.onerror = (e) => {
+          console.error("Audio error:", e);
+          setAudioError("Unable to play track. Please select another song.");
+        };
+        audioRef.current.volume = volume / 100;
+      } else {
       audioRef.current.src = audioUrl;
       audioRef.current.load();
     }

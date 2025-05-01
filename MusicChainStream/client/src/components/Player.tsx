@@ -159,8 +159,12 @@ function Player() {
         };
         audioRef.current.volume = volume / 100;
       } else {
-      audioRef.current.src = audioUrl;
-      audioRef.current.load();
+        audioRef.current.src = audioUrl;
+        audioRef.current.load();
+      }
+    } catch (err) {
+      console.error("Audio initialization error:", err);
+      setAudioError("Failed to initialize audio player.");
     }
 
     if (isPlaying && audioRef.current) {

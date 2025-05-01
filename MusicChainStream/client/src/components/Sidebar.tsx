@@ -11,6 +11,7 @@ function Sidebar() {
     { icon: Search, label: "Search", path: "/search" },
     { icon: Library, label: "Library", path: "/library" },
     { icon: User, label: "Profile", path: "/profile" },
+    { icon: () => <i className="ri-upload-line text-xl"/>, label: "Upload", path: "/artist-dashboard" },
   ];
 
   if (!isMobile) {

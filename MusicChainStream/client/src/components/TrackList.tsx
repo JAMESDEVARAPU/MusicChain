@@ -1,3 +1,4 @@
+
 import { usePlayer } from "@/contexts/PlayerContext";
 import { Track } from "@shared/schema";
 
@@ -12,16 +13,15 @@ const TrackList = ({
   showAlbum = true,
   showArtist = true,
 }: TrackListProps) => {
-  const { currentTrack, isPlaying, setCurrentTrack, togglePlayPause } =
-    usePlayer();
+  const { currentTrack, isPlaying, setIsPlaying, setCurrentTrack, togglePlayPause } = usePlayer();
 
   const handlePlay = (track: Track) => {
-    if (currentTrack && currentTrack.id === track.id) {
-      // If the clicked track is already playing, toggle play/pause
+    if (currentTrack?.id === track.id) {
       togglePlayPause();
     } else {
-      // If the clicked track is different, set it as the current track
+      setIsPlaying(false);
       setCurrentTrack(track);
+      setTimeout(() => setIsPlaying(true), 0);
     }
   };
 
@@ -70,9 +70,7 @@ const TrackList = ({
                     className="w-10 h-10 mr-3 rounded"
                   />
                   <div>
-                    <p
-                      className={`font-medium ${currentTrack?.id === track.id ? "text-[#1DB954]" : "text-white"}`}
-                    >
+                    <p className={`font-medium ${currentTrack?.id === track.id ? "text-[#1DB954]" : "text-white"}`}>
                       {track.title}
                     </p>
                     <p className="text-[#B3B3B3] text-sm hidden sm:block">

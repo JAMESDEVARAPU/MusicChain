@@ -1,23 +1,56 @@
 
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import { neon } from '@neondatabase/serverless';
-import * as schema from '../shared/schema';
+// In-memory storage implementation
+const store = {
+  users: new Map(),
+  artists: new Map(),
+  tracks: new Map(),
+  playlists: new Map(),
+  transactions: new Map()
+};
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL is not defined');
-}
+export const db = {
+  // User operations
+  getUser: (id: number) => store.users.get(id),
+  createUser: (data: any) => {
+    const id = store.users.size + 1;
+    store.users.set(id, { ...data, id });
+    return { id, ...data };
+  },
 
-const sql = neon(process.env.DATABASE_URL);
-export const db = drizzle(sql, { schema });
+  // Artist operations
+  getArtist: (id: number) => store.artists.get(id),
+  createArtist: (data: any) => {
+    const id = store.artists.size + 1;
+    store.artists.set(id, { ...data, id });
+    return { id, ...data };
+  },
 
-// Helper function to check database connection
-export async function checkDatabaseConnection() {
-  try {
-    const result = await sql`SELECT 1`;
-    console.log('Database connected successfully');
-    return true;
-  } catch (error) {
-    console.error('Database connection failed:', error);
-    return false;
+  // Track operations
+  getTrack: (id: number) => store.tracks.get(id),
+  createTrack: (data: any) => {
+    const id = store.tracks.size + 1;
+    store.tracks.set(id, { ...data, id });
+    return { id, ...data };
+  },
+
+  // Playlist operations
+  getPlaylist: (id: number) => store.playlists.get(id),
+  createPlaylist: (data: any) => {
+    const id = store.playlists.size + 1;
+    store.playlists.set(id, { ...data, id });
+    return { id, ...data };
+  },
+
+  // Transaction operations
+  getTransaction: (id: number) => store.transactions.get(id),
+  createTransaction: (data: any) => {
+    const id = store.transactions.size + 1;
+    store.transactions.set(id, { ...data, id });
+    return { id, ...data };
   }
+};
+
+// No need for connection check since we're using in-memory storage
+export async function checkDatabaseConnection() {
+  return true;
 }

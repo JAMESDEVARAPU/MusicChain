@@ -103,3 +103,23 @@
 .font-heading {
   font-family: 'Montserrat', sans-serif;
 }
+
+/* Mobile Navigation Styles */
+@media (max-width: 768px) {
+  .content-area {
+    padding-bottom: 4rem; /* Space for mobile navigation */
+  }
+}
+
+/* Navigation Animations */
+.nav-link {
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link:hover {
+  transform: scale(1.05);
+}
+
+.nav-link.active {
+  color: theme('colors.white');
+}

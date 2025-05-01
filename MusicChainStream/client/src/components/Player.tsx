@@ -1,20 +1,30 @@
+// src/components/Player.tsx
+
 import { useState, useEffect, useRef } from "react";
 import { usePlayer } from "@/contexts/PlayerContext";
-import { useBlockchain } from "@/contexts/BlockchainContext";
 import { Slider } from "@/components/ui/slider";
-import { cn } from "@/lib/utils";
-import ExplicitAudioPlayer from "@/components/ExplicitAudioPlayer";
-import AudioGenerator from "@/components/AudioGenerator";
+import { cn } from "@/lib/utils"; // Assuming cn is a utility for class names
+import ExplicitAudioPlayer from "@/components/ExplicitAudioPlayer"; // Custom explicit content player
+import AudioGenerator from "@/components/AudioGenerator"; // Component for audio generation
 
 function Player() {
   const {
-    currentTrack, isPlaying, setIsPlaying, togglePlayPause, nextTrack, previousTrack,
-    volume, setVolume, toggleShuffle, toggleRepeat, isShuffle, isRepeat
+    currentTrack,
+    isPlaying,
+    setIsPlaying,
+    togglePlayPause,
+    nextTrack,
+    previousTrack,
+    volume,
+    setVolume,
+    toggleShuffle,
+    toggleRepeat,
+    isShuffle,
+    isRepeat
   } = usePlayer();
-  const { payArtist } = useBlockchain();
 
   const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(180);
+  const [duration, setDuration] = useState(180); // Set default track duration
   const [playerReady, setPlayerReady] = useState(false);
   const [audioError, setAudioError] = useState<string | null>(null);
   const [generatedAudioUrl, setGeneratedAudioUrl] = useState<string | null>(null);
@@ -33,7 +43,7 @@ function Player() {
 
   useEffect(() => {
     if (!audioRef.current || !playerReady || !currentTrack) return;
-    
+
     const playAudio = async () => {
       try {
         if (isPlaying) {
@@ -72,18 +82,6 @@ function Player() {
     };
   }, [isPlaying, playerReady]);
 
-  useEffect(() => {
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = "";
-      }
-      if (generatedAudioUrl) {
-        URL.revokeObjectURL(generatedAudioUrl);
-      }
-    };
-  }, [generatedAudioUrl]);
-
   const handleSeek = (value: number[]) => {
     if (duration && audioRef.current) {
       const seekTime = (value[0] / 100) * duration;
@@ -96,12 +94,6 @@ function Player() {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
-
-  const handlePayArtist = () => {
-    if (currentTrack) {
-      payArtist(currentTrack.artistId, 0.001);
-    }
   };
 
   const handleForcePlay = (e: React.MouseEvent) => {
@@ -128,8 +120,6 @@ function Player() {
       }
     }
   };
-
-  if (!currentTrack) return null;
 
   const handleAudioGenerated = (audioUrl: string) => {
     setGeneratedAudioUrl(audioUrl);
@@ -173,6 +163,8 @@ function Player() {
       });
     }
   };
+
+  if (!currentTrack) return null;
 
   return (
     <div className="flex flex-col items-center w-full">
@@ -227,12 +219,6 @@ function Player() {
         >
           Repeat
         </button>
-        <button
-          onClick={handlePayArtist}
-          className="p-2 ml-2 bg-gray-200 hover:bg-gray-300 rounded-full"
-        >
-          Pay Artist
-        </button>
       </div>
       <div className="w-full mt-4">
         <Slider value={[volume]} onChange={setVolume} />
@@ -242,7 +228,6 @@ function Player() {
           <button onClick={handleForcePlay} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Force Play</button>
         )}
       </div>
-
     </div>
   );
 }

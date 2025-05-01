@@ -1,5 +1,4 @@
 import { usePlayer } from "@/contexts/PlayerContext";
-import { useBlockchain } from "@/contexts/BlockchainContext";
 import { Track } from "@shared/schema";
 
 interface TrackListProps {
@@ -8,17 +7,24 @@ interface TrackListProps {
   showArtist?: boolean;
 }
 
-const TrackList = ({ tracks, showAlbum = true, showArtist = true }: TrackListProps) => {
-  const { currentTrack, isPlaying, setCurrentTrack, togglePlayPause } = usePlayer();
-  
+const TrackList = ({
+  tracks,
+  showAlbum = true,
+  showArtist = true,
+}: TrackListProps) => {
+  const { currentTrack, isPlaying, setCurrentTrack, togglePlayPause } =
+    usePlayer();
+
   const handlePlay = (track: Track) => {
     if (currentTrack && currentTrack.id === track.id) {
+      // If the clicked track is already playing, toggle play/pause
       togglePlayPause();
     } else {
+      // If the clicked track is different, set it as the current track
       setCurrentTrack(track);
     }
   };
-  
+
   return (
     <div className="bg-[#181818] rounded-lg overflow-hidden">
       <table className="w-full text-left">
@@ -26,8 +32,16 @@ const TrackList = ({ tracks, showAlbum = true, showArtist = true }: TrackListPro
           <tr className="border-b border-[#282828] text-[#B3B3B3] text-xs">
             <th className="py-3 px-4 font-medium w-10">#</th>
             <th className="py-3 px-4 font-medium">TITLE</th>
-            {showArtist && <th className="py-3 px-4 font-medium hidden md:table-cell">ARTIST</th>}
-            {showAlbum && <th className="py-3 px-4 font-medium hidden lg:table-cell">ALBUM</th>}
+            {showArtist && (
+              <th className="py-3 px-4 font-medium hidden md:table-cell">
+                ARTIST
+              </th>
+            )}
+            {showAlbum && (
+              <th className="py-3 px-4 font-medium hidden lg:table-cell">
+                ALBUM
+              </th>
+            )}
             <th className="py-3 px-4 font-medium text-right">
               <i className="ri-time-line"></i>
             </th>
@@ -36,8 +50,8 @@ const TrackList = ({ tracks, showAlbum = true, showArtist = true }: TrackListPro
         </thead>
         <tbody>
           {tracks.map((track, index) => (
-            <tr 
-              key={track.id} 
+            <tr
+              key={track.id}
               className="group hover:bg-[#282828] cursor-pointer"
               onClick={() => handlePlay(track)}
             >
@@ -50,13 +64,15 @@ const TrackList = ({ tracks, showAlbum = true, showArtist = true }: TrackListPro
               </td>
               <td className="py-3 px-4">
                 <div className="flex items-center">
-                  <img 
-                    src={track.albumCover} 
-                    alt={`${track.title} cover`} 
+                  <img
+                    src={track.albumCover}
+                    alt={`${track.title} cover`}
                     className="w-10 h-10 mr-3 rounded"
                   />
                   <div>
-                    <p className={`font-medium ${currentTrack?.id === track.id ? 'text-[#1DB954]' : 'text-white'}`}>
+                    <p
+                      className={`font-medium ${currentTrack?.id === track.id ? "text-[#1DB954]" : "text-white"}`}
+                    >
                       {track.title}
                     </p>
                     <p className="text-[#B3B3B3] text-sm hidden sm:block">
@@ -65,9 +81,19 @@ const TrackList = ({ tracks, showAlbum = true, showArtist = true }: TrackListPro
                   </div>
                 </div>
               </td>
-              {showArtist && <td className="py-3 px-4 text-[#B3B3B3] hidden md:table-cell">{track.artist}</td>}
-              {showAlbum && <td className="py-3 px-4 text-[#B3B3B3] hidden lg:table-cell">{track.album}</td>}
-              <td className="py-3 px-4 text-[#B3B3B3] text-right">{track.duration}</td>
+              {showArtist && (
+                <td className="py-3 px-4 text-[#B3B3B3] hidden md:table-cell">
+                  {track.artist}
+                </td>
+              )}
+              {showAlbum && (
+                <td className="py-3 px-4 text-[#B3B3B3] hidden lg:table-cell">
+                  {track.album}
+                </td>
+              )}
+              <td className="py-3 px-4 text-[#B3B3B3] text-right">
+                {track.duration}
+              </td>
               <td className="py-3 px-4">
                 <div className="flex justify-center">
                   <span className="bg-[#282828] px-2 py-1 rounded text-xs flex items-center text-[#1DB954]">
